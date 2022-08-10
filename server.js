@@ -2,7 +2,7 @@ const http = require("http");
 const express = require("express");
 const { createUser } = require("./user");
 const { createPost } = require("./createPost");
-const { viewPost } = require("./viewPost");
+const { viewPost, modifyPost } = require("./post");
 const { sendProducts } = require("./sendProducts");
 
 const app = express();
@@ -14,6 +14,7 @@ app.get("/ping", (req, res) => {
 app.post("/signup", createUser);
 app.post("/createPost", createPost);
 app.get("/viewPost", viewPost);
+app.patch("/modifyPost", modifyPost);
 
 app.get("/products", sendProducts);
 
