@@ -19,14 +19,14 @@ const posts = {
       userID: 3,
       userName: "new user 1",
       postingId: 3,
-      postingImageUrl: "내용 1",
+      postingTitle: "내용 1",
       postingContent: "sampleContent3",
     },
     {
       userID: 4,
       userName: "new user 2",
       postingId: 4,
-      postingImageUrl: "내용 2",
+      postingTitle: "내용 2",
       postingContent: "sampleContent4",
     },
   ],
@@ -37,16 +37,13 @@ const viewPost = (req, res) => {
 };
 
 const modifyPost = (req, res) => {
-  const { postingId, postingTitle, postingImageUrl, postingContent } =
-    req.body.data;
+  const { postingId, postingTitle, postingContent } = req.body.data;
   const post = posts.data[postingId - 1];
-  if (post.postingTitle !== undefined) post.postingTitle = postingTitle;
-  if (post.postingImageUrl !== undefined)
-    post.postingImageUrl = postingImageUrl;
-  if (post.postingContent !== undefined) post.postingContent = postingContent;
+  if (postingTitle !== undefined) post.postingTitle = postingTitle;
+  if (postingContent !== undefined) post.postingContent = postingContent;
   console.log(posts);
 
-  res.json({ message: "postModified!" });
+  res.status(200).json({ message: "postModified!" });
 };
 
 module.exports = { viewPost, modifyPost };
