@@ -37,9 +37,13 @@ const viewPost = (req, res) => {
 };
 
 const modifyPost = (req, res) => {
-  const { postingId, postingContent } = req.body.data;
-  posts.data[postingId - 1].postingContent = postingContent;
-
+  const { postingId, postingTitle, postingImageUrl, postingContent } =
+    req.body.data;
+  const post = posts.data[postingId - 1];
+  if (post.postingTitle !== undefined) post.postingTitle = postingTitle;
+  if (post.postingImageUrl !== undefined)
+    post.postingImageUrl = postingImageUrl;
+  if (post.postingContent !== undefined) post.postingContent = postingContent;
   console.log(posts);
 
   res.json({ message: "postModified!" });
