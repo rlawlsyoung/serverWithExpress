@@ -37,36 +37,46 @@ const viewPost = (req, res) => {
 };
 
 const modifyPost = (req, res) => {
-  const { postingId, postingTitle, postingContent } = req.body.data;
-  const post = posts.data[postingId - 1];
-  if (postingTitle !== undefined) post.postingTitle = postingTitle;
-  if (postingContent !== undefined) post.postingContent = postingContent;
-  console.log(posts);
+  try {
+    const { postingId, postingTitle, postingContent } = req.body.data;
+    const post = posts.data[postingId - 1];
+    if (postingTitle !== undefined) post.postingTitle = postingTitle;
+    if (postingContent !== undefined) post.postingContent = postingContent;
+    console.log(posts);
 
-  res.status(200).json({ message: "postModified!" });
+    res.status(200).json({ message: "postModified!" });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
 };
 
 const deletePost = (req, res) => {
-  const { postingId } = req.body;
-  const post = posts.data.find((post) => post.postingId === postingId);
-  posts.data.splice(post.postingId - 1, 1);
-  console.log(posts.data);
+  const postingId = Number(req.query.postingId);
+  if (!Number.isNaN(postingId)) {
+    const post = posts.data.find((post) => post.postingId === postingId);
+    posts.data.splice(post.postingId - 1, 1);
+    console.log(posts.data);
 
-  res.json({ message: "postDeleted!" });
+    res.status(200).json({ message: "postDeleted!" });
+  } else res.status(400).json({ message: "Error!" });
 };
 
 const viewMyPosts = (req, res) => {
-  const { userID } = req.body;
-  const postArr = posts.data.filter((post) => post.userID === userID);
-  const userName = postArr[0].userName;
+  try {
+    const userID = Number(req.query.userID);
+    const postArr = posts.data.filter((post) => post.userID === userID);
+    const userName = postArr[0].userName;
 
-  res.json({
-    data: {
-      userID: userID,
-      userName: userName,
-      postings: postArr,
-    },
-  });
+    res.status(200).json({
+      data: {
+        userID: userID,
+        userName: userName,
+        postings: postArr,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
 };
 
 module.exports = { viewPost, modifyPost, deletePost, viewMyPosts };

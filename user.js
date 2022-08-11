@@ -14,18 +14,22 @@ const users = [
 ];
 
 const createUser = (req, res) => {
-  const user = req.body.data;
+  try {
+    const user = req.body.data;
 
-  users.push({
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    password: user.password,
-  });
+    users.push({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    });
 
-  console.log(`after push : ${users}`);
+    console.log(`after push : ${users}`);
 
-  res.json({ message: "userCreated!" });
+    res.status(200).json({ message: "userCreated!" });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
 };
 
 module.exports = { createUser };

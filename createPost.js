@@ -14,18 +14,22 @@ const posts = [
 ];
 
 const createPost = (req, res) => {
-  const post = req.body.post;
+  try {
+    const post = req.body.post;
 
-  posts.push({
-    id: post.id,
-    title: post.title,
-    content: post.content,
-    userId: post.userId,
-  });
+    posts.push({
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      userId: post.userId,
+    });
 
-  console.log(`after push : ${posts}`);
+    console.log(`after push : ${posts}`);
 
-  res.status(201).json({ message: "postCreated!" });
+    res.status(201).json({ message: "postCreated!" });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
 };
 
 module.exports = { createPost };
