@@ -58,8 +58,15 @@ const deletePost = (req, res) => {
 const viewMyPosts = (req, res) => {
   const { userID } = req.body;
   const postArr = posts.data.filter((post) => post.userID === userID);
+  const userName = postArr[0].userName;
 
-  res.json({ postArr });
+  res.json({
+    data: {
+      userID: userID,
+      userName: userName,
+      postings: postArr,
+    },
+  });
 };
 
 module.exports = { viewPost, modifyPost, deletePost, viewMyPosts };
