@@ -25,7 +25,7 @@ const createPost = (req, res) => {
 
   console.log(`after push : ${posts}`);
 
-  res.json({ message: "postCreated!" });
+  res.status(201).json({ message: "postCreated!" });
 };
 
 module.exports = { createPost };
